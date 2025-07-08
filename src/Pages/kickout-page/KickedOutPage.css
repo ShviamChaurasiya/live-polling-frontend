@@ -1,0 +1,44 @@
+.kicked-out-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 75%;
+  margin: auto;
+  text-align: center;
+}
+
+.kicked-out-card {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 40px;
+  /* box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05); */
+}
+
+.poll-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.poll-description {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.intervue-btn {
+  background: linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%);
+  color: white !important;
+  border-radius: 25px !important;
+  font-size: 1rem !important;
+}
+
+.continue-btn {
+  background: linear-gradient(99.18deg, #8F64E1 -46.89%, #1D68BD 223.45%);
+  color: white !important;
+  border-radius: 25px !important;
+  padding: 10px 30px !important;
+  font-size: 1rem !important;
+  border: none;
+}
