@@ -24,7 +24,7 @@ const PollHistoryPage = () => {
         console.log("✅ Polls fetched:", response.data);
         setPolls(response.data?.data || []);
       } catch (error) {
-        console.error("❌ Error fetching polls:", error);
+        console.error("❌ Error fetching polls:", apiUrl);
         setPolls([]);
       }
     };
