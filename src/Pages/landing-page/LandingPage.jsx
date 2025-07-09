@@ -82,17 +82,6 @@ const LoginPage = () => {
           </div>
         </div>
 
-        {selectedRole && (
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder="Enter your name"
-              className="form-control"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-        )}
 
         <button className="btn continue-btn" onClick={continueToPoll}>
           Continue
