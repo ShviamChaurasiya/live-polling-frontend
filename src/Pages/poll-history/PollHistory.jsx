@@ -56,7 +56,8 @@ const PollHistoryPage = () => {
 
       {polls.length > 0 ? (
         polls.map((poll, index) => {
-          const totalVotes = poll.Options?.reduce(
+          const options = poll.Options || poll.options || []; // ✅ check both cases
+          const totalVotes = options.reduce(
             (sum, option) => sum + (option?.votes || 0),
             0
           );
@@ -70,7 +71,7 @@ const PollHistoryPage = () => {
                     {poll.question}
                   </h6>
                   <div className="list-group mt-4">
-                    {poll.Options?.map((option) => (
+                    {options.map((option) => (
                       <div
                         key={option.id}
                         className="list-group-item rounded m-2"
