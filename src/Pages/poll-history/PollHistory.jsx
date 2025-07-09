@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backIcon from "../../assets/back.svg";
 
-const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = "https://live-polling-backend-inmh.onrender.com";
 
 const PollHistoryPage = () => {
   const [polls, setPolls] = useState([]);
@@ -24,7 +24,7 @@ const PollHistoryPage = () => {
         console.log("✅ Polls fetched:", response.data);
         setPolls(response.data?.data || []);
       } catch (error) {
-        console.error("❌ Error fetching polls:", apiUrl);
+        console.error("❌ Error fetching polls:", error);
         setPolls([]);
       }
     };
