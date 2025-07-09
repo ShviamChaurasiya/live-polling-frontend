@@ -4,7 +4,7 @@ import "./LandingPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 let apiUrl =
-  import.meta.env.VITE_NODE_ENV === "production"
+  import.meta.env.MODE === "production"
     ? import.meta.env.VITE_API_BASE_URL
     : "http://localhost:3000";
 const LoginPage = () => {

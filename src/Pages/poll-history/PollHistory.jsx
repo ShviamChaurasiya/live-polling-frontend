@@ -5,7 +5,9 @@ import axios from "axios";
 import backIcon from "../../assets/back.svg";
 import socket from "../../socket";
 
-const apiUrl = "http://localhost:3000"; // ✅ Define if missing
+const apiUrl = import.meta.env.VITE_API_URL;
+
+
 
 const PollHistoryPage = () => {
   const [polls, setPolls] = useState([]);
