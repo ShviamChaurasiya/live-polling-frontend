@@ -4,7 +4,6 @@ import axios from "axios";
 import stars from "../../assets/spark.svg";
 import "./LandingPage.css";
 
-// ✅ Dynamically use correct backend URL
 const apiUrl =
   import.meta.env.MODE === "production"
     ? import.meta.env.VITE_API_BASE_URL
@@ -12,7 +11,6 @@ const apiUrl =
 
 const LoginPage = () => {
   const [selectedRole, setSelectedRole] = useState(null);
-  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   const selectRole = (role) => {
@@ -25,16 +23,9 @@ const LoginPage = () => {
       return;
     }
 
-    if (!username.trim()) {
-      alert("Please enter your name.");
-      return;
-    }
-
     if (selectedRole === "teacher") {
       try {
-        const response = await axios.post(`${apiUrl}/teacher-login`, {
-          username,
-        });
+        const response = await axios.post(`${apiUrl}/teacher-login`);
 
         sessionStorage.setItem("username", response.data.username);
         navigate("/teacher-home-page");
@@ -43,7 +34,6 @@ const LoginPage = () => {
         alert("Teacher login failed. Please try again.");
       }
     } else if (selectedRole === "student") {
-      sessionStorage.setItem("username", username);
       navigate("/student-home-page");
     }
   };
@@ -81,7 +71,6 @@ const LoginPage = () => {
             <span>Submit questions and view poll results in real time.</span>
           </div>
         </div>
-
 
         <button className="btn continue-btn" onClick={continueToPoll}>
           Continue

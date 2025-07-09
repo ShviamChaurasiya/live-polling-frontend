@@ -3,11 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import backIcon from "../../assets/back.svg";
-import socket from "../../socket";
 
 const apiUrl = import.meta.env.VITE_API_URL;
-
-
 
 const PollHistoryPage = () => {
   const [polls, setPolls] = useState([]);
@@ -16,13 +13,18 @@ const PollHistoryPage = () => {
   useEffect(() => {
     const getPolls = async () => {
       const username = sessionStorage.getItem("username");
-      if (!username) return;
+
+      if (!username) {
+        console.warn("❌ No teacher username found in sessionStorage.");
+        return;
+      }
 
       try {
         const response = await axios.get(`${apiUrl}/polls/${username}`);
-        setPolls(response.data.data || []);
+        console.log("✅ Polls fetched:", response.data);
+        setPolls(response.data?.data || []);
       } catch (error) {
-        console.error("Error fetching polls:", error);
+        console.error("❌ Error fetching polls:", error);
         setPolls([]);
       }
     };
@@ -45,7 +47,7 @@ const PollHistoryPage = () => {
         <img
           src={backIcon}
           alt="Back"
-          width={"25px"}
+          width="25px"
           style={{ cursor: "pointer" }}
           onClick={handleBack}
         />{" "}
@@ -55,7 +57,7 @@ const PollHistoryPage = () => {
       {polls.length > 0 ? (
         polls.map((poll, index) => {
           const totalVotes = poll.Options?.reduce(
-            (sum, option) => sum + option.votes,
+            (sum, option) => sum + (option?.votes || 0),
             0
           );
 
@@ -64,8 +66,8 @@ const PollHistoryPage = () => {
               <div className="pb-3">{`Question ${index + 1}`}</div>
               <div className="card mb-4">
                 <div className="card-body">
-                  <h6 className="question py-2 ps-2 text-left rounded text-white">
-                    {poll.question} ?
+                  <h6 className="question py-2 ps-2 text-left rounded text-white bg-primary">
+                    {poll.question}
                   </h6>
                   <div className="list-group mt-4">
                     {poll.Options?.map((option) => (
@@ -84,7 +86,7 @@ const PollHistoryPage = () => {
                         </div>
                         <div className="progress mt-2">
                           <div
-                            className="progress-bar progress-bar-bg"
+                            className="progress-bar"
                             role="progressbar"
                             style={{
                               width: `${calculatePercentage(
@@ -106,7 +108,7 @@ const PollHistoryPage = () => {
           );
         })
       ) : (
-        <div className="text-muted">No polls found</div>
+        <div className="text-muted">No polls found.</div>
       )}
     </div>
   );
