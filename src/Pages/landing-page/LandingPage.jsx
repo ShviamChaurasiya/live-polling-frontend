@@ -12,6 +12,7 @@ const apiUrl =
 
 const LoginPage = () => {
   const [selectedRole, setSelectedRole] = useState(null);
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   const selectRole = (role) => {
@@ -24,16 +25,25 @@ const LoginPage = () => {
       return;
     }
 
+    if (!username.trim()) {
+      alert("Please enter your name.");
+      return;
+    }
+
     if (selectedRole === "teacher") {
       try {
-        const response = await axios.post(`${apiUrl}/teacher-login`);
+        const response = await axios.post(`${apiUrl}/teacher-login`, {
+          username,
+        });
+
         sessionStorage.setItem("username", response.data.username);
         navigate("/teacher-home-page");
       } catch (error) {
         console.error("Teacher login failed:", error);
-        alert("Login failed. Please try again.");
+        alert("Teacher login failed. Please try again.");
       }
     } else if (selectedRole === "student") {
+      sessionStorage.setItem("username", username);
       navigate("/student-home-page");
     }
   };
@@ -60,9 +70,7 @@ const LoginPage = () => {
             onClick={() => selectRole("student")}
           >
             <p>I'm a Student</p>
-            <span>
-              Join live polls and submit answers during interactive sessions.
-            </span>
+            <span>Join live polls and submit answers during interactive sessions.</span>
           </div>
 
           <div
@@ -73,6 +81,18 @@ const LoginPage = () => {
             <span>Submit questions and view poll results in real time.</span>
           </div>
         </div>
+
+        {selectedRole && (
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="Enter your name"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+        )}
 
         <button className="btn continue-btn" onClick={continueToPoll}>
           Continue
